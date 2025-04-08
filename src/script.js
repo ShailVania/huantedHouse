@@ -13,6 +13,7 @@ const gui = new GUI({
 })
 const floorTweaks = gui.addFolder('Floor Tweaks')
 
+
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
@@ -52,10 +53,9 @@ floorNormalTexture.wrapT = THREE.RepeatWrapping
 const wallColorTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cracked_concrete_wall_diff_1k.jpg')
 const wallArmTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cracked_concrete_wall_arm_1k.jpg')
 const wallNormalTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cracked_concrete_wall_nor_gl_1k.jpg')
-const wallDisplacementTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cracked_concrete_wall_disp_1k.jpg')
-
 wallColorTexture.colorSpace = THREE.SRGBColorSpace
 
+//roof textures
 
 //house
 
@@ -80,12 +80,20 @@ scene.add(floor)
 floorTweaks.add(floor.material, 'displacementScale').min(0).max(1).step(0.001).name('floorDisplacementScale')
 floorTweaks.add(floor.material, 'displacementBias').min(-1).max(1).step(0.001).name('floorDisplacementBias')
 
+
 // -1reating House wall;
 const houseWalls = new THREE.Mesh(
     new THREE.BoxGeometry(4, 2.5, 4),
-    new THREE.MeshStandardMaterial()
+    new THREE.MeshStandardMaterial({
+        map: wallColorTexture,
+        aoMap: wallArmTexture,
+        roughnessMap: wallArmTexture,
+        metalnessMap: wallArmTexture,
+        normalMap: wallNormalTexture,
+    })
 )
 houseWalls.position.y = 1.25
+
 
 //roof
 const roof = new THREE.Mesh(
