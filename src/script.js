@@ -11,7 +11,7 @@ import GUI from 'lil-gui'
 const gui = new GUI({
     title: 'Debug UI'
 })
-gui.addFolder('Lights')
+const floorTweaks = gui.addFolder('Floor Tweaks')
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -54,18 +54,26 @@ floorNormalTexture.wrapT = THREE.RepeatWrapping
 
 //Floor
 const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(20,20),
+    new THREE.PlaneGeometry(20,20, 100, 100),
     new THREE.MeshStandardMaterial({
         alphaMap: floorAlphaTexture,
         transparent: true,
         map: floorColorTexture,
-
+        aoMap: floorArmTexture,
+        roughnessMap: floorArmTexture,
+        metalnessMap: floorArmTexture,
+        displacementMap: floorDisplacemetTexture,
+        displacementScale: 0.4,
+        displacementBias: - 0.09,
     })
 )
 floor.rotation.x = - Math.PI * 0.5
 scene.add(floor)
 
-// Creating House wall;
+floorTweaks.add(floor.material, 'displacementScale').min(0).max(1).step(0.001).name('floorDisplacementScale')
+floorTweaks.add(floor.material, 'displacementBias').min(-1).max(1).step(0.001).name('floorDisplacementBias')
+
+// -1reating House wall;
 const houseWalls = new THREE.Mesh(
     new THREE.BoxGeometry(4, 2.5, 4),
     new THREE.MeshStandardMaterial()
@@ -143,11 +151,6 @@ for (let i = 0; i < 20 ; i++) {
 }
 
  
-
-
-
-
-
 //Lights
 // Ambient light
 const ambientLight = new THREE.AmbientLight('#ffffff', 0.5)
