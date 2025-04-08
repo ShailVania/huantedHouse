@@ -28,8 +28,8 @@ const textureLoader = new THREE.TextureLoader()
 const floorAlphaTexture = textureLoader.load('/floor/alpha.jpg')
 const floorColorTexture = textureLoader.load('/floor/dirt_1k/dirt_diff_1k.jpg')
 const floorArmTexture = textureLoader.load('/floor/dirt_1k/dirt_arm_1k.jpg')
-const floorDisplacemetTexture = textureLoader.load('/floor/dirt_1k/dirt_disp_1k.jpg')
 const floorNormalTexture = textureLoader.load('/floor/dirt_1k/dirt_nor_gl_1k.jpg')
+const floorDisplacemetTexture = textureLoader.load('/floor/dirt_1k/dirt_disp_1k.jpg')
 
 floorColorTexture.colorSpace = THREE.SRGBColorSpace
 
@@ -48,6 +48,13 @@ floorArmTexture.wrapT = THREE.RepeatWrapping
 floorDisplacemetTexture.wrapT = THREE.RepeatWrapping
 floorNormalTexture.wrapT = THREE.RepeatWrapping
 
+//wall textures
+const wallColorTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cracked_concrete_wall_diff_1k.jpg')
+const wallArmTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cracked_concrete_wall_arm_1k.jpg')
+const wallNormalTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cracked_concrete_wall_nor_gl_1k.jpg')
+const wallDisplacementTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cracked_concrete_wall_disp_1k.jpg')
+
+wallColorTexture.colorSpace = THREE.SRGBColorSpace
 
 
 //house
