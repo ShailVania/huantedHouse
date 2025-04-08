@@ -22,13 +22,24 @@ const scene = new THREE.Scene()
 const house = new THREE.Group()
 scene.add(house)
 
+//Textures loader
+const textureLoader = new THREE.TextureLoader()
+
+//Textures for floor
+const floorAlphaTexture = textureLoader.load('/floor/alpha.jpg')
+
+
 /**
  * House
  */
 //Floor
 const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(20,20),
-    new THREE.MeshStandardMaterial()
+    new THREE.MeshStandardMaterial({
+        alphaMap: floorAlphaTexture,
+        transparent: true
+
+    })
 )
 floor.rotation.x = - Math.PI * 0.5
 scene.add(floor)
@@ -51,7 +62,7 @@ roof.rotation.y = Math.PI * 0.25
 //Door
 const door = new THREE.Mesh(
     new THREE.PlaneGeometry(2.2, 2.2),
-    new THREE.MeshStandardMaterial({color:0xff0000})
+    new THREE.MeshStandardMaterial()
 )
 door.position.y = 1
 door.position.z = houseWalls.position.z + 2.01
@@ -60,7 +71,7 @@ house.add(houseWalls, roof, door)
 
 //Bushes
 const bushGeometry = new THREE.IcosahedronGeometry(2,0)
-const bushMaterial = new THREE.MeshStandardMaterial({color:0x000000})
+const bushMaterial = new THREE.MeshStandardMaterial()
 
 const bush1 = new THREE.Mesh(bushGeometry, bushMaterial)
 bush1.scale.set(0.08, 0.05, 0.08)
@@ -93,13 +104,19 @@ scene.add(grave)
 
 for (let i = 0; i < 20 ; i++) {
     const angle = Math.random() * Math.PI * 2
-    const radius = 4
+    const radius = 3 + Math.random() * 4
     const x = Math.sin(angle) * radius
     const z = Math.cos(angle) * radius
     const tomb = new THREE.Mesh(graveGeometry, graveMaterial)
 
     tomb.position.x = x
+    tomb.position.y = Math.random() * 0.4
     tomb.position.z = z
+
+    tomb.rotation.x = (Math.random() - 0.5) * 0.4
+    tomb.rotation.y = (Math.random() - 0.5) * 0.4
+    tomb.rotation.z = (Math.random() - 0.5) * 0.4
+
     
     grave.add(tomb)
 }
