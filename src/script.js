@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { Timer } from 'three/addons/misc/Timer.js'
 import GUI from 'lil-gui'
 import { ThreeMFLoader } from 'three/examples/jsm/Addons.js'
+import { sin } from 'three/tsl'
 
 /**
  * Base
@@ -89,6 +90,19 @@ const graveMaterial = new THREE.MeshStandardMaterial();
 
 const grave = new THREE.Group()
 scene.add(grave)
+
+for (let i = 0; i < 20 ; i++) {
+    const angle = Math.random() * Math.PI * 2
+    const radius = 4
+    const x = Math.sin(angle) * radius
+    const z = Math.cos(angle) * radius
+    const tomb = new THREE.Mesh(graveGeometry, graveMaterial)
+
+    tomb.position.x = x
+    tomb.position.z = z
+    
+    grave.add(tomb)
+}
 
  
 
