@@ -2,8 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { Timer } from 'three/addons/misc/Timer.js'
 import GUI from 'lil-gui'
-import { ThreeMFLoader } from 'three/examples/jsm/Addons.js'
-import { sin } from 'three/tsl'
+
 
 /**
  * Base
@@ -27,17 +26,39 @@ const textureLoader = new THREE.TextureLoader()
 
 //Textures for floor
 const floorAlphaTexture = textureLoader.load('/floor/alpha.jpg')
+const floorColorTexture = textureLoader.load('/floor/dirt_1k/dirt_diff_1k.jpg')
+const floorArmTexture = textureLoader.load('/floor/dirt_1k/dirt_arm_1k.jpg')
+const floorDisplacemetTexture = textureLoader.load('/floor/dirt_1k/dirt_disp_1k.jpg')
+const floorNormalTexture = textureLoader.load('/floor/dirt_1k/dirt_nor_gl_1k.jpg')
+
+floorColorTexture.colorSpace = THREE.SRGBColorSpace
+
+floorColorTexture.repeat.set(8,8)
+floorArmTexture.repeat.set(8,8)
+floorDisplacemetTexture.repeat.set(8,8)
+floorNormalTexture.repeat.set(8,8)
+
+floorColorTexture.wrapS = THREE.RepeatWrapping
+floorArmTexture.wrapS = THREE.RepeatWrapping
+floorDisplacemetTexture.wrapS = THREE.RepeatWrapping
+floorNormalTexture.wrapS = THREE.RepeatWrapping
+
+floorColorTexture.wrapT = THREE.RepeatWrapping
+floorArmTexture.wrapT = THREE.RepeatWrapping
+floorDisplacemetTexture.wrapT = THREE.RepeatWrapping
+floorNormalTexture.wrapT = THREE.RepeatWrapping
 
 
-/**
- * House
- */
+
+//house
+
 //Floor
 const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(20,20),
     new THREE.MeshStandardMaterial({
         alphaMap: floorAlphaTexture,
-        transparent: true
+        transparent: true,
+        map: floorColorTexture,
 
     })
 )
