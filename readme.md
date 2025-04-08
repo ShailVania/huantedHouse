@@ -1,5 +1,5 @@
 # Haunted House
-My effort to master three.js through the guidance of Bruno Simon.
+My effort to master Three.js, WebGL and Blender through the guidance of Bruno Simon.
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
