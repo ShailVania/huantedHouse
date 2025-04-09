@@ -5,6 +5,7 @@ import GUI from 'lil-gui'
 
 
 
+
 /**
  * Base
  */
@@ -250,6 +251,12 @@ for (let i = 0; i < 20 ; i++) {
     grave.add(tomb)
 }
 
+//ghost 
+const ghost1 = new THREE.PointLight('#8800ff', 3)
+const ghost2 = new THREE.PointLight('#ff0088', 3)
+const ghost3 = new THREE.PointLight('#ff0000', 3)
+
+scene.add(ghost1, ghost2, ghost3)
  
 //Lights
 // Ambient light
@@ -330,7 +337,24 @@ const tick = () =>
     // Timer
     timer.update()
     const elapsedTime = timer.getElapsed()
+    
+    //ghost angle
+    const ghost1Angle = elapsedTime * 0.5
+    const ghost2Angle = - elapsedTime * 0.4 
+    const ghost3Angle = elapsedTime * 0.3
 
+    ghost1.position.x = Math.cos(ghost1Angle) * 4
+    ghost1.position.z = Math.sin(ghost1Angle) * 4
+    ghost1.position.y = Math.sin(ghost1Angle) * Math.sin(elapsedTime * 2.34) * Math.sin(elapsedTime * 3.45) 
+    
+    ghost2.position.x = Math.cos(ghost2Angle) * 5
+    ghost2.position.z = Math.sin(ghost2Angle) * 5
+    ghost2.position.y = Math.sin(ghost2Angle) * Math.sin(elapsedTime * 2.34) * Math.sin(elapsedTime * 3.45) 
+    
+    ghost3.position.x = Math.cos(ghost3Angle) * 4
+    ghost3.position.z = Math.sin(ghost3Angle) * 5
+    ghost3.position.y = Math.sin(ghost3Angle) * Math.sin(elapsedTime * 2.34) * Math.sin(elapsedTime * 3.45) 
+    
     // Update controls
     controls.update()
 
