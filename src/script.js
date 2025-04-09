@@ -4,6 +4,7 @@ import { Timer } from 'three/addons/misc/Timer.js'
 import GUI from 'lil-gui'
 
 
+
 /**
  * Base
  */
@@ -37,8 +38,8 @@ floorColorTexture.colorSpace = THREE.SRGBColorSpace
 
 floorColorTexture.repeat.set(8,8)
 floorArmTexture.repeat.set(8,8)
-floorDisplacemetTexture.repeat.set(8,8)
 floorNormalTexture.repeat.set(8,8)
+floorDisplacemetTexture.repeat.set(8,8)
 
 floorColorTexture.wrapS = THREE.RepeatWrapping
 floorArmTexture.wrapS = THREE.RepeatWrapping
@@ -55,6 +56,16 @@ const wallColorTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cra
 const wallArmTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cracked_concrete_wall_arm_1k.jpg')
 const wallNormalTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cracked_concrete_wall_nor_gl_1k.jpg')
 wallColorTexture.colorSpace = THREE.SRGBColorSpace
+
+//Door Textures
+const doorAlphaTexture = textureLoader.load('/door/alpha.jpg')
+const doorAmbientOcculsionTexture = textureLoader.load('/door/ambientOcclusion.jpg')
+const doorColorTexture = textureLoader.load('/door/color.jpg')
+const doorHeightTexture = textureLoader.load('/door/height.jpg')
+const doorMetalnessTexture = textureLoader.load('/door/metalness.jpg')
+const doorNormalTexture = textureLoader.load('/door/normal.jpg')
+const doorRoughnessTexture = textureLoader.load('/door/roughness.jpg')
+doorColorTexture.colorSpace = THREE.SRGBColorSpace
 
 //roof textures
 const roofColorTexture = textureLoader.load('/house/roof_tiles_14_1k/roof_tiles_14_diff_1k.jpg')
@@ -79,6 +90,17 @@ roofNormalTexture.wrapS = THREE.RepeatWrapping
 const rockColorTexture = textureLoader.load('/rocks/rock_08_1k/rock_08_diff_1k.jpg')
 const rockArmTexture = textureLoader.load('/rocks/rock_08_1k/rock_08_arm_1k.jpg')
 const rockNormalTexture = textureLoader.load('/rocks/rock_08_1k/rock_08_nor_gl_1k.jpg')
+rockColorTexture.colorSpace = THREE.SRGBColorSpace
+
+//Tomb textures
+const tombColorTexture = textureLoader.load('/tomb/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.jpg')
+const tombArmTexture = textureLoader.load('/tomb/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.jpg')
+const tombNormalTexture = textureLoader.load('/tomb/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.jpg')
+tombColorTexture.colorSpace = THREE.SRGBColorSpace
+
+tombColorTexture.repeat.set(0.3, 0.4)
+tombArmTexture.repeat.set(0.3, 0.4)
+tombNormalTexture.repeat.set(0.3, 0.4)
 
 
 //house
@@ -113,6 +135,7 @@ const houseWalls = new THREE.Mesh(
         roughnessMap: wallArmTexture,
         metalnessMap: wallArmTexture,
         normalMap: wallNormalTexture,
+        
     })
 )
 houseWalls.position.y = 1.25
@@ -141,8 +164,20 @@ roof.rotation.y = Math.PI * 0.25
 
 //Door
 const door = new THREE.Mesh(
-    new THREE.PlaneGeometry(2.2, 2.2),
-    new THREE.MeshStandardMaterial()
+    new THREE.PlaneGeometry(2.2, 2.2, 100, 100),
+    new THREE.MeshStandardMaterial({
+        alphaMap: doorAlphaTexture,
+        transparent: true,
+        map: doorColorTexture,
+        aoMap: doorAmbientOcculsionTexture,
+        roughnessMap: doorRoughnessTexture,
+        metalnessMap: doorMetalnessTexture,
+        normalMap: doorNormalTexture,
+        displacementMap: doorHeightTexture,
+        displacementBias: - 0.04,
+        displacementScale: 0.15
+
+    })
 )
 door.position.y = 1
 door.position.z = houseWalls.position.z + 2.01
@@ -185,7 +220,13 @@ house.add(rock1, rock2, rock3, rock4)
 
 //graves
 const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2)
-const graveMaterial = new THREE.MeshStandardMaterial();
+const graveMaterial = new THREE.MeshStandardMaterial({
+    map: tombColorTexture,
+    aoMap: tombArmTexture,
+    roughnessMap: tombArmTexture,
+    metalnessMap: tombArmTexture,
+    normalMap: tombNormalTexture,
+});
 
 const grave = new THREE.Group()
 scene.add(grave)
