@@ -11,7 +11,8 @@ import GUI from 'lil-gui'
 const gui = new GUI({
     title: 'Debug UI'
 })
-const floorTweaks = gui.addFolder('Floor Tweaks')
+const roofTweaks = gui.addFolder('Roof Tweaks')
+const floorTweaks = gui.addFolder('Roof Tweaks')
 
 
 // Canvas
@@ -56,6 +57,30 @@ const wallNormalTexture = textureLoader.load('/house/cracked_concrete_wall_1k/cr
 wallColorTexture.colorSpace = THREE.SRGBColorSpace
 
 //roof textures
+const roofColorTexture = textureLoader.load('/house/roof_tiles_14_1k/roof_tiles_14_diff_1k.jpg')
+const roofArmTexture = textureLoader.load('/house/roof_tiles_14_1k/roof_tiles_14_arm_1k.jpg')
+const roofNormalTexture = textureLoader.load('/house/roof_tiles_14_1k/roof_tiles_14_nor_gl_1k.jpg')
+// const roofDisplacemetTexture = textureLoader.load('/house/roof_tiles_14_1k/roof_tiles_14_disp_1k.jpg')
+
+
+roofColorTexture.colorSpace = THREE.SRGBColorSpace
+
+roofColorTexture.repeat.set(3,1)
+roofArmTexture.repeat.set(3,1)
+roofNormalTexture.repeat.set(3,1)
+// roofDisplacemetTexture.repeat.set(6,6)
+
+roofColorTexture.wrapS = THREE.RepeatWrapping
+roofArmTexture.wrapS = THREE.RepeatWrapping
+roofNormalTexture.wrapS = THREE.RepeatWrapping
+// roofDisplacemetTexture.wrapS = THREE.RepeatWrapping
+
+//Rock Textures
+const rockAlphaTexture = textureLoader.load('')
+const rockColorTexture = textureLoader.load('')
+const rockArmTexture = textureLoader.load('')
+const rockNormalTexture = textureLoader.load('')
+const rockDisplacemetTexture = textureLoader.load('')
 
 //house
 
@@ -80,8 +105,7 @@ scene.add(floor)
 floorTweaks.add(floor.material, 'displacementScale').min(0).max(1).step(0.001).name('floorDisplacementScale')
 floorTweaks.add(floor.material, 'displacementBias').min(-1).max(1).step(0.001).name('floorDisplacementBias')
 
-
-// -1reating House wall;
+//House wall;
 const houseWalls = new THREE.Mesh(
     new THREE.BoxGeometry(4, 2.5, 4),
     new THREE.MeshStandardMaterial({
@@ -97,11 +121,24 @@ houseWalls.position.y = 1.25
 
 //roof
 const roof = new THREE.Mesh(
-    new THREE.ConeGeometry(3.5, 1.5, 4),
-    new THREE.MeshStandardMaterial()
+    new THREE.ConeGeometry(3.5, 1.5, 4, 20),
+    new THREE.MeshStandardMaterial({
+        map: roofColorTexture,
+        normalMap: roofNormalTexture,
+        aoMap: roofArmTexture,
+        roughnessMap: roofArmTexture,
+        metalnessMap: roofArmTexture,
+        // displacementMap: roofDisplacemetTexture,
+        // displacementBias: 0.4,
+        // displacementScale: 0.3
+        
+    })
 )
 roof.position.y = 2.5 + 0.75
 roof.rotation.y = Math.PI * 0.25
+
+// roofTweaks.add(roof.material, 'displacementScale').min(0).max(1).step(0.001).name('roofDisplacementScale')
+// roofTweaks.add(roof.material, 'displacementBias').min(-1).max(1).step(0.001).name('roofDisplacementBias')
 
 //Door
 const door = new THREE.Mesh(
