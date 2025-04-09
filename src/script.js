@@ -10,12 +10,6 @@ import { Sky } from 'three/examples/jsm/Addons.js'
 /**
  * Base
  */
-// Debug
-const gui = new GUI({
-    title: 'Debug UI'
-})
-const roofTweaks = gui.addFolder('Roof Tweaks')
-const floorTweaks = gui.addFolder('Roof Tweaks')
 
 
 // Canvas
@@ -125,8 +119,6 @@ const floor = new THREE.Mesh(
 floor.rotation.x = - Math.PI * 0.5
 scene.add(floor)
 
-floorTweaks.add(floor.material, 'displacementScale').min(0).max(1).step(0.001).name('floorDisplacementScale')
-floorTweaks.add(floor.material, 'displacementBias').min(-1).max(1).step(0.001).name('floorDisplacementBias')
 
 //House wall;
 const houseWalls = new THREE.Mesh(
@@ -161,8 +153,6 @@ const roof = new THREE.Mesh(
 roof.position.y = 2.5 + 0.75
 roof.rotation.y = Math.PI * 0.25
 
-// roofTweaks.add(roof.material, 'displacementScale').min(0).max(1).step(0.001).name('roofDisplacementScale')
-// roofTweaks.add(roof.material, 'displacementBias').min(-1).max(1).step(0.001).name('roofDisplacementBias')
 
 //Door
 const door = new THREE.Mesh(
@@ -318,7 +308,9 @@ scene.add(camera)
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
-
+controls.enablePan = false
+controls.maxPolarAngle = 1.3
+controls.maxDistance = 15
 /**
  * Renderer
  */
