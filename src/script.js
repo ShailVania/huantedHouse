@@ -252,9 +252,9 @@ for (let i = 0; i < 20 ; i++) {
 }
 
 //ghost 
-const ghost1 = new THREE.PointLight('#8800ff', 3)
-const ghost2 = new THREE.PointLight('#ff0088', 3)
-const ghost3 = new THREE.PointLight('#ff0000', 3)
+const ghost1 = new THREE.PointLight('#8800ff', 5)
+const ghost2 = new THREE.PointLight('#ff0088', 5)
+const ghost3 = new THREE.PointLight('#ff0000', 5)
 
 scene.add(ghost1, ghost2, ghost3)
  
@@ -309,8 +309,8 @@ window.addEventListener('keydown', (event) => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-// camera.position.x = 
-// camera.position.y = 2
+camera.position.x = 4
+camera.position.y = 2
 camera.position.z = 8
 scene.add(camera)
 
@@ -327,6 +327,46 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+//Shadows
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = THREE.PCFSoftShadowMap
+
+directionalLight.castShadow = true
+houseWalls.castShadow = true
+houseWalls.receiveShadow = true
+roof.castShadow = true
+floor.receiveShadow = true
+ghost1.castShadow = true
+ghost2.castShadow = true
+ghost3.castShadow = true
+
+grave.children.forEach(element => {
+    element.castShadow = true
+    element.receiveShadow = true
+});
+
+//mappings
+directionalLight.shadow.mapSize.width = 256
+directionalLight.shadow.mapSize.height = 256
+directionalLight.shadow.camera.top = 8
+directionalLight.shadow.camera.right = 8
+directionalLight.shadow.camera.bottom = - 8
+directionalLight.shadow.camera.left = - 8
+directionalLight.shadow.camera.near = 1
+directionalLight.shadow.camera.far = 20
+
+ghost1.shadow.mapSize.width = 256
+ghost1.shadow.mapSize.height = 256
+ghost1.shadow.camera.far = 10
+
+ghost2.shadow.mapSize.width = 256
+ghost2.shadow.mapSize.height = 256
+ghost2.shadow.camera.far = 10
+
+ghost3.shadow.mapSize.width = 256
+ghost3.shadow.mapSize.height = 256
+ghost3.shadow.camera.far = 10
+
 /**
  * Animate
  */
@@ -341,7 +381,7 @@ const tick = () =>
     //ghost angle
     const ghost1Angle = elapsedTime * 0.5
     const ghost2Angle = - elapsedTime * 0.4 
-    const ghost3Angle = elapsedTime * 0.3
+    const ghost3Angle = elapsedTime * 0.23
 
     ghost1.position.x = Math.cos(ghost1Angle) * 4
     ghost1.position.z = Math.sin(ghost1Angle) * 4
