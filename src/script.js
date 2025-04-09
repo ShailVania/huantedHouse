@@ -76,11 +76,10 @@ roofNormalTexture.wrapS = THREE.RepeatWrapping
 // roofDisplacemetTexture.wrapS = THREE.RepeatWrapping
 
 //Rock Textures
-const rockAlphaTexture = textureLoader.load('')
-const rockColorTexture = textureLoader.load('')
-const rockArmTexture = textureLoader.load('')
-const rockNormalTexture = textureLoader.load('')
-const rockDisplacemetTexture = textureLoader.load('')
+const rockColorTexture = textureLoader.load('/rocks/rock_08_1k/rock_08_diff_1k.jpg')
+const rockArmTexture = textureLoader.load('/rocks/rock_08_1k/rock_08_arm_1k.jpg')
+const rockNormalTexture = textureLoader.load('/rocks/rock_08_1k/rock_08_nor_gl_1k.jpg')
+
 
 //house
 
@@ -150,31 +149,39 @@ door.position.z = houseWalls.position.z + 2.01
 
 house.add(houseWalls, roof, door)
 
-//Bushes
-const bushGeometry = new THREE.IcosahedronGeometry(2,0)
-const bushMaterial = new THREE.MeshStandardMaterial()
+//Rocks
+const rockGeometry = new THREE.IcosahedronGeometry(2,0)
+const rockMaterial = new THREE.MeshStandardMaterial({
+    map: rockColorTexture,
+    aoMap: rockArmTexture,
+    roughnessMap: rockArmTexture,
+    metalnessMap: rockArmTexture,
+    normalMap: rockNormalTexture,
+})
 
-const bush1 = new THREE.Mesh(bushGeometry, bushMaterial)
-bush1.scale.set(0.08, 0.05, 0.08)
-bush1.position.set(1.2, 0.07, 2.17)
-bush1.rotation.z = Math.PI * 0.25
+const rock1 = new THREE.Mesh(rockGeometry, rockMaterial)
+rock1.scale.set(0.08, 0.05, 0.08)
+rock1.position.set(1.2, 0.07, 2.17)
+rock1.rotation.z = Math.PI * 0.25
 
-const bush2 = new THREE.Mesh(bushGeometry, bushMaterial)
-bush2.scale.set(0.15, 0.09, 0.09)
-bush2.position.set(1.5, 0.07, 2.17)
-bush2.rotation.z = Math.PI * 0.25
+const rock2 = new THREE.Mesh(rockGeometry, rockMaterial)
+rock2.scale.set(0.15, 0.09, 0.09)
+rock2.position.set(1.5, 0.07, 2.17)
+rock2.rotation.z = Math.PI * 0.25
+rock2.rotation.x = -0.85
 
-const bush3 = new THREE.Mesh(bushGeometry, bushMaterial)
-bush3.scale.set(0.15, 0.09, 0.09)
-bush3.position.set(-1.5, 0.07, 2.17)
-bush3.rotation.z = Math.PI * 0.35
 
-const bush4 = new THREE.Mesh(bushGeometry, bushMaterial)
-bush4.scale.set(0.08, 0.05, 0.08)
-bush4.position.set(-1.22, 0.07, 2.17)
-bush4.rotation.z = Math.PI * 0.35
+const rock3 = new THREE.Mesh(rockGeometry, rockMaterial)
+rock3.scale.set(0.15, 0.09, 0.09)
+rock3.position.set(-1.5, 0.07, 2.17)
+rock3.rotation.z = Math.PI * 0.35
 
-house.add(bush1, bush2, bush3, bush4)
+const rock4 = new THREE.Mesh(rockGeometry, rockMaterial)
+rock4.scale.set(0.08, 0.05, 0.08)
+rock4.position.set(-1.22, 0.07, 2.17)
+rock4.rotation.z = Math.PI * 0.35
+
+house.add(rock1, rock2, rock3, rock4)
 
 //graves
 const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2)
