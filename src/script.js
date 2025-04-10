@@ -394,11 +394,23 @@ fireFliesMaterial.sizeAttenuation = true
 // fireFliesMaterial.map = fireFliesTexture
 fireFliesMaterial.alphaMap = fireFliesTexture
 fireFliesMaterial.transparent = true
+fireFliesMaterial.alphaTest = 0.01
 fireFliesMaterial.color = new THREE.Color('#ffba4d')
 
 const fireFlies = new THREE.Points(fireFliesGeometry, fireFliesMaterial)
 
 scene.add(fireFlies)
+
+const mouse = {
+    x: undefined,
+    y: undefined
+};
+
+window.addEventListener('mousemove', (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+});
+
 
 /**
  * Animate
@@ -429,14 +441,17 @@ const tick = () =>
     ghost3.position.y = Math.sin(ghost3Angle) * Math.sin(elapsedTime * 2.34) * Math.sin(elapsedTime * 3.45) 
 
     // 
-    const positions = fireFliesGeometry.attributes.position.array;
+    // const positions = fireFliesGeometry.attributes.position.array;
     
-    for (let i = 0; i < positions.length; i += 3) {
-        positions[i] += 0.002 + (Math.random() - 0.5) * 0.005;
-        positions[i + 1] += 0.002 + (Math.random() - 0.5) * 0.005;
-        positions[i + 2] += 0.002 + (Math.random() - 0.5) * 0.005;
-    }
-    fireFliesGeometry.attributes.position.needsUpdate = true
+    // for (let i = 0; i < positions.length; i += 3) {
+    //     positions[i] += 0.0008 + (Math.random() - 0.5) * 0.001;
+    //     positions[i + 1] += 0.0008 + (Math.random() - 0.5) * 0.001;
+    //     positions[i + 2] += 0.0008 + (Math.random() - 0.5) * 0.001;
+
+    // }
+    // fireFliesGeometry.attributes.position.needsUpdate = true
+    fireFlies.position.x = mouse.x * 2
+    fireFlies.position.y = mouse.y * 2
     
     // Update controls
     controls.update()
