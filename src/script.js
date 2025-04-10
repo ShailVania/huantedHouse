@@ -374,6 +374,25 @@ sky.material.uniforms['sunPosition'].value.set(0.3, -0.038, -0.95)
 //Fog
 scene.fog = new THREE.FogExp2('#02343f', 0.1)
 
+//Fireflies
+const fireFliesGeometry = new THREE.BufferGeometry()
+const count = 20
+const position =  new Float32Array(count * 3)
+
+for (let i = 0; i < count * 3 ; i++) 
+{
+    position[i] = 2 + (Math.random() - 0.5) * 8
+}
+fireFliesGeometry.setAttribute('position', new THREE.BufferAttribute(position, 3))
+
+const fireFliesMaterial = new THREE.PointsMaterial()
+fireFliesMaterial.size = 0.1
+fireFliesMaterial.sizeAttenuation = true
+
+const fireFlies = new THREE.Points(fireFliesGeometry, fireFliesMaterial)
+
+scene.add(fireFlies)
+
 /**
  * Animate
  */
