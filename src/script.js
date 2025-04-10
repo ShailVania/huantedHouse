@@ -98,6 +98,9 @@ tombColorTexture.repeat.set(0.3, 0.4)
 tombArmTexture.repeat.set(0.3, 0.4)
 tombNormalTexture.repeat.set(0.3, 0.4)
 
+//FirFlies Textures 
+const fireFliesTexture = textureLoader.load('/particles/8.webp')
+
 
 //house
 
@@ -376,18 +379,22 @@ scene.fog = new THREE.FogExp2('#02343f', 0.1)
 
 //Fireflies
 const fireFliesGeometry = new THREE.BufferGeometry()
-const count = 20
+const count = 30
 const position =  new Float32Array(count * 3)
 
 for (let i = 0; i < count * 3 ; i++) 
 {
-    position[i] = 2 + (Math.random() - 0.5) * 8
+    position[i] = (Math.random() - 0.5) * 10
 }
 fireFliesGeometry.setAttribute('position', new THREE.BufferAttribute(position, 3))
 
 const fireFliesMaterial = new THREE.PointsMaterial()
-fireFliesMaterial.size = 0.1
+fireFliesMaterial.size = 0.19
 fireFliesMaterial.sizeAttenuation = true
+// fireFliesMaterial.map = fireFliesTexture
+fireFliesMaterial.alphaMap = fireFliesTexture
+fireFliesMaterial.transparent = true
+fireFliesMaterial.color = new THREE.Color('#ffba4d')
 
 const fireFlies = new THREE.Points(fireFliesGeometry, fireFliesMaterial)
 
@@ -420,6 +427,16 @@ const tick = () =>
     ghost3.position.x = Math.cos(ghost3Angle) * 4
     ghost3.position.z = Math.sin(ghost3Angle) * 5
     ghost3.position.y = Math.sin(ghost3Angle) * Math.sin(elapsedTime * 2.34) * Math.sin(elapsedTime * 3.45) 
+
+    // 
+    const positions = fireFliesGeometry.attributes.position.array;
+    
+    for (let i = 0; i < positions.length; i += 3) {
+        positions[i] += 0.002 + (Math.random() - 0.5) * 0.005;
+        positions[i + 1] += 0.002 + (Math.random() - 0.5) * 0.005;
+        positions[i + 2] += 0.002 + (Math.random() - 0.5) * 0.005;
+    }
+    fireFliesGeometry.attributes.position.needsUpdate = true
     
     // Update controls
     controls.update()
